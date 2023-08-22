@@ -1,19 +1,35 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [list, setList] = useState([]);
+  const [id, setId] = useState(0);
 
   const addGoalHandler = (enteredGoalText) => {
     setList((currentCourseGoals) => [
       ...currentCourseGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
+      {
+        text: enteredGoalText,
+        key: Math.random().toString(),
+        id: id,
+      },
     ]);
+    setId(id + 1);
     // console.log("list 배열 : ", list);
     // Alert.alert("추가 되었습니다.");
   };
+
+  const deleteHandler = (id) => {
+    setList((currentCourseGoals) => {
+      return currentCourseGoals.filter((el) => el.id !== id);
+    });
+  };
+
+  useEffect(() => {
+    console.log("list 배열 : ", list);
+  });
 
   return (
     <View style={styles.appContainer}>
@@ -22,7 +38,13 @@ export default function App() {
         <FlatList
           data={list}
           renderItem={(itemData) => {
-            return <GoalItem props={itemData.item} />;
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                onDelete={deleteHandler}
+                id={itemData.item.id}
+              />
+            );
           }}
           keyExtractor={(item, index) => {
             return item.key;
