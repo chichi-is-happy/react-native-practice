@@ -1,4 +1,11 @@
-import { StyleSheet, Button, TextInput, View } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  TextInput,
+  View,
+  Image,
+  Modal,
+} from "react-native";
 import { useState } from "react";
 
 export default GoalInput = (props) => {
@@ -11,11 +18,16 @@ export default GoalInput = (props) => {
   const addGoalHandler = () => {
     props.onAddGoal(text);
     setText("");
+    props.openModalHandler(false);
   };
 
   return (
-    <>
+    <Modal visible={props.modal}>
       <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/goal.png")}
+        />
         <TextInput
           style={styles.textInput}
           onChangeText={goalInputHandler}
@@ -25,28 +37,47 @@ export default GoalInput = (props) => {
           // iOS 전용 clear 버튼 모드
           clearButtonMode="while-editing"
         />
-        <Button title="Add!" onPress={addGoalHandler} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="Add!" onPress={addGoalHandler} />
+          </View>
+          <View style={styles.button}>
+            <Button title="Cancel" onPress={props.openModalHandler} />
+          </View>
+        </View>
       </View>
-    </>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    flexDirection: "row",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 30,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
+    padding: 16,
+    backgroundColor: "black",
   },
   textInput: {
-    height: 40,
-    marginRight: 12,
     borderWidth: 1,
     borderColor: "#cccccc",
     padding: 10,
-    width: "70%",
+    width: "100%",
+    color: "white",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginTop: 13,
+  },
+  button: {
+    width: 100,
+    marginHorizontal: 8,
+    backgroundColor: "lightblue",
+    color: "white",
+  },
+  image: {
+    width: 100,
+    height: 100,
   },
 });
