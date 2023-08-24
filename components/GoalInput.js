@@ -39,10 +39,14 @@ export default GoalInput = (props) => {
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Add!" onPress={addGoalHandler} />
+            <Button title="Add!" onPress={addGoalHandler} color="#8B1819" />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={props.openModalHandler} />
+            <Button
+              title="Cancel"
+              onPress={props.openModalHandler}
+              color="#585858"
+            />
           </View>
         </View>
       </View>
@@ -57,14 +61,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
-    backgroundColor: "black",
+    backgroundColor: "#EDE0C9",
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: "rgb(164, 159, 150)",
+    borderRadius: 10,
     padding: 10,
     width: "100%",
-    color: "white",
+    color: "#585858",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -73,11 +78,11 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     marginHorizontal: 8,
-    backgroundColor: "lightblue",
     color: "white",
   },
   image: {
     width: 100,
     height: 100,
+    marginBottom: 20,
   },
 });

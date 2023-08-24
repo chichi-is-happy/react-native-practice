@@ -1,4 +1,5 @@
-import { StyleSheet, View, FlatList, Button, Text } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
@@ -22,8 +23,6 @@ export default function App() {
       },
     ]);
     setId(id + 1);
-    // console.log("list 배열 : ", list);
-    // Alert.alert("추가 되었습니다.");
   };
 
   const deleteHandler = (id) => {
@@ -37,34 +36,39 @@ export default function App() {
   });
 
   return (
-    <View style={styles.appContainer}>
-      <Button title="+" onPress={openModalHandler} />
-      {modal && (
-        <GoalInput
-          visible={modal}
-          onAddGoal={addGoalHandler}
-          openModalHandler={openModalHandler}
-        />
-      )}
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={list}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                text={itemData.item.text}
-                onDelete={deleteHandler}
-                id={itemData.item.id}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.key;
-          }}
-          alwaysBounceVertical={false}
-        />
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <View style={styles.button}>
+          <Button title="+" onPress={openModalHandler} color="#8B1819" />
+        </View>
+        {modal && (
+          <GoalInput
+            visible={modal}
+            onAddGoal={addGoalHandler}
+            openModalHandler={openModalHandler}
+          />
+        )}
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={list}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item.text}
+                  onDelete={deleteHandler}
+                  id={itemData.item.id}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.key;
+            }}
+            alwaysBounceVertical={false}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -81,5 +85,6 @@ const styles = StyleSheet.create({
   goalsContainer: {
     flex: 5,
     width: "70%",
+    marginTop: 30,
   },
 });
